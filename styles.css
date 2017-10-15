@@ -6,21 +6,117 @@ body {
     margin: 0px;
 }
 
+.container {
+    height: 500px;
+}
+
 header {
     background: #F47422;
     color: #fff;
-    padding: 7px;
+    padding: 10px;
 }
 
 header span.logo {
-    font-size: 85%;
+    font-size: 11px;
     text-transform: uppercase;
+    margin-left: 5px;
 }
+
+header i {
+    margin-left: 4px;
+    cursor: pointer;
+}
+
 header span.profile {
     float: right;
+    margin-top: -5px;
 }
+
+header span.profile span {
+    display: block;
+}
+
 header span.profile img {
-    width: 32px;
+    width: 27px;
+    float: right;
     border-radius: 50%;
-    box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
 }
+
+/* Styles for the task type header */
+.task-type ul {
+    list-style-type: none;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    margin: 2px;
+}
+
+.task-type ul li {
+    float: left;
+    text-align: center;
+    padding: 13px;
+    margin: 2px;
+    width: 50px;
+    line-height: 14px;
+    cursor: pointer;
+}
+
+.task-type ul li i {
+    font-size: 25px;
+    color: #193A8F;
+}
+
+.task-type ul li span {
+    font-size: 11px;
+}
+
+.task-type ul li:hover, .task-type ul li.active {
+    background: #EAEDF6;
+    border-radius: 3px;
+}
+
+/* Styling for things list */
+.things-list ul {
+    list-style-type: none;
+    font-size: 12px;
+    color: #193A8F;
+
+    margin: 7px;
+    padding: 0;
+}
+
+.things-list ul li {
+    line-height: 23px;
+    cursor: pointer;
+    padding-left: 5px;
+}
+
+.things-list ul li:hover {
+    background: #FAFAFA;
+}
+
+.things-list i {
+    font-size: 13px;
+    cursor: pointer;
+    margin: 0px 3px 5px 3px;
+    color: #1F69B6;
+}
+
+i.fa-comments {
+    float: right;
+    padding: 5px 5px 0px 0px;
+}
+
+.things-list span.date {
+    color: #AAA;
+    font-size: 9px;
+    font-weight: normal;
+}
+
+.completed {
+    text-decoration: line-through; 
+    font-size: 10px;
+}
+
+

@@ -10,18 +10,46 @@
 </head>
 <body>
     <header>
+        <i class="fa fa-bars" aria-hidden="true"></i>
         <span class="logo">Things to do</span>
         <span class="profile">
             <img src="https://avatars2.githubusercontent.com/u/18741615?v=4" alt="">
         </span>
     </header>
-    <div class="main-container">
-        <ul>
-            <li>Go fishing on Varthur lake</li>
-            <li>Buy groceries</li>            
-            <li>Clean motorcycle</li>            
-            <li>Withdraw cash</li>            
-        </ul>
+    <div class="container">
+        <div class="task-type">
+            <ul>
+                <li class="active">
+                    <i class="fa fa-briefcase" aria-hidden="true"></i><br />
+                    <span>Work</span>     
+                </li>
+                <li>
+                    <i class="fa fa-user" aria-hidden="true"></i><br />
+                    <span>Personal</span>     
+                </li>
+                <li>
+                    <i class="fa fa-home" aria-hidden="true"></i><br />
+                    <span>Home</span>     
+                </li>
+                <li>
+                    <i class="fa fa-tasks" aria-hidden="true"></i><br />
+                    <span>Other</span>     
+                </li>
+            </ul>
+        </div>
+        <div class="things-list">
+            <ul>
+                <li><span class="date">12-Oct-17</span> <i class="fa fa-circle-o"></i> Go fishing on Varthur lake</li>
+                <li><span class="date">12-Oct-17</span> 
+                    <i class="fa fa-check-circle"></i> <span class="completed">
+                    CR059 Add Terms &amp; Conditions
+                    </span>
+                    <i class="fa fa-comments"></i>
+                </li>            
+                <li><span class="date">12-Oct-17</span> <i class="fa fa-circle-o"></i> Withdraw cash <i class="fa fa-comments"></i></li>            
+            </ul>
+        </div>
+        
     </div>
     <script src="app.js"></script>
 </body>
