@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+    "name": "Things To Do",
+    "description": "This is a simple to-do extension for the Google Chrome browser.",
+    "version": "1.0.0",
+    "icons": {
+        "48": "icon.png"
+    },
+    "browser_action": {
+        "default_icon": {
+            "48": "icon.png"
+        },
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "activeTab",
+        "storage"
+    ]
+}

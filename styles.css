@@ -1,0 +1,26 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+body {
+    font-family: 'Open Sans', 'Segoe UI', verdana, sans-serif;
+    color: #444;
+    width: 500px;
+    margin: 0px;
+}
+
+header {
+    background: #F47422;
+    color: #fff;
+    padding: 7px;
+}
+
+header span.logo {
+    font-size: 85%;
+    text-transform: uppercase;
+}
+header span.profile {
+    float: right;
+}
+header span.profile img {
+    width: 32px;
+    border-radius: 50%;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+}
