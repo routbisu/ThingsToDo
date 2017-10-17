@@ -44,6 +44,10 @@ header span.profile img {
 }
 
 /* Styles for the task type header */
+.task-type {
+    margin: 5px 2px;
+}
+
 .task-type ul {
     list-style-type: none;
     overflow: hidden;
@@ -77,12 +81,17 @@ header span.profile img {
 }
 
 /* Styling for things list */
+.things-list {
+    margin: 2px 4px 2px 2px;
+    padding: 0;
+}
+
 .things-list ul {
     list-style-type: none;
     font-size: 12px;
     color: #193A8F;
 
-    margin: 7px;
+    margin: 0px;
     padding: 0;
 }
 
@@ -119,4 +128,35 @@ i.fa-comments {
     font-size: 10px;
 }
 
+.add-button {
+    color: #1F69B6;
+    cursor: pointer;
+}
 
+.add-task {
+    font-size: 12px;
+    border: 1px solid #EAEAEA;
+    padding: 5px;
+    border-radius: 3px;
+    margin: 2px 8px 0px 6px;
+    width: 450px;
+}
+
+/* Styles for the sidebar */
+.sidebar {
+    width: 250px;
+    position: fixed;
+    top: 50;
+    left: 0;
+    height: 505px;
+    background: #FFFDFC;
+    z-index: 100;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    padding: 15px 10px;
+    /*opacity: 0.96;*/
+}
+
+.main-profile-pic {
+    border-radius: 50%;
+    width: 50px;
+}
