@@ -13,48 +13,69 @@
 <body>
     <header>
         <i class="fa fa-bars" id="hamburger-menu"></i>
-        <span class="logo">Things to do</span>
+        <!-- <span class="logo">Things to do</span> -->
         <span class="profile">
             <!-- <img src="https://avatars2.githubusercontent.com/u/18741615?v=4" alt=""> -->
-            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            <i class="fa fa-bell"></i> Things To Do 
         </span>
     </header>
     <div class="sidebar">
-        <div class="profile">
-            <img src="https://avatars2.githubusercontent.com/u/18741615?v=4" class="main-profile-pic">
-            <span class="profile-name">
-                Biswaranjan Rout
-            </span>
-            <span class="profile-email">bisu9861861136@gmail.com</span>
+        <div id="sidebar-content">
+            <div class="profile">
+                <img src="https://avatars2.githubusercontent.com/u/18741615?v=4" class="main-profile-pic">
+                <span class="profile-name">
+                    Biswaranjan Rout
+                </span>
+                <span class="profile-email">bisu9861861136@gmail.com</span>
+            </div>
+            <div class="profile-content">
+                <h3>Select Tasks</h3>
+                <span class="filter-icon selected">
+                    <i class="fa fa-paper-plane"></i>Pending</span>
+                <span class="filter-icon selected">
+                    <i class="fa fa-paper-plane-o"></i>Complete</span>
+                <span class="filter-icon ">
+                    <i class="fa fa-globe"></i>Show All</span>
+                <h3>Filter By Date</h3>
+                <span class="filter-icon">
+                    <i class="fa fa-calendar-o"></i>Week</span>
+                <span class="filter-icon">
+                    <i class="fa fa-calendar"></i>Month</span>
+                <span class="filter-icon ">
+                    <i class="fa fa-cog"></i>Custom</span>
+                <span class="filter-icon selected">
+                    <i class="fa fa-globe"></i>All</span>
+                <input type="text" class="filter-date" placeholder="Start Date">
+                <input type="text" class="filter-date" placeholder="End Date">
+                <h3>Task Category</h3>
+                <span class="filter-icon-list">
+                    <i class="fa fa-circle-o"></i>
+                    <i class="fa fa-briefcase"></i>Work</span>
+                <span class="filter-icon-list">
+                    <i class="fa fa-circle-o"></i>
+                    <i class="fa fa-user"></i>Personal</span>
+                <span class="filter-icon-list">
+                    <i class="fa fa-check-circle"></i>
+                    <i class="fa fa-home"></i>Home</span>
+                <span class="filter-icon-list">
+                    <i class="fa fa-circle-o"></i>
+                    <i class="fa fa-tasks"></i>Other</span>
+                <h3>26 Task(s) found</h3>
+                <span class="filter-icon selected">
+                    <i class="fa fa-table"></i>Export as CSV</span>
+                <span class="filter-icon">
+                    <i class="fa fa-sign-out"></i>Logout</span>
+            </div>
         </div>
-        <div class="profile-content">
-            <h3>Select Tasks</h3>
-            <span class="filter-icon selected"><i class="fa fa-paper-plane"></i>Pending</span> 
-            <span class="filter-icon selected"><i class="fa fa-paper-plane-o"></i>Complete</span> 
-            <span class="filter-icon "><i class="fa fa-globe"></i>Show All</span> 
-            <h3>Filter By Date</h3>
-            <span class="filter-icon"><i class="fa fa-calendar-o"></i>Week</span> 
-            <span class="filter-icon"><i class="fa fa-calendar"></i>Month</span> 
-            <span class="filter-icon "><i class="fa fa-cog"></i>Custom</span> 
-            <span class="filter-icon selected"><i class="fa fa-globe"></i>All</span> 
-            <input type="text" class="filter-date">
-            <input type="text" class="filter-date">
-            <h3>Task Category</h3>
-            <span class="filter-icon-list"><i class="fa fa-circle-o"></i><i class="fa fa-briefcase"></i>Work</span> 
-            <span class="filter-icon-list"><i class="fa fa-circle-o"></i><i class="fa fa-user"></i>Personal</span> 
-            <span class="filter-icon-list"><i class="fa fa-check-circle"></i><i class="fa fa-home"></i>Home</span> 
-            <span class="filter-icon-list"><i class="fa fa-circle-o"></i><i class="fa fa-tasks"></i>Other</span> 
-            <h3>26 Task(s) found</h3>
-            <span class="filter-icon selected"><i class="fa fa-paper-plane-o"></i>Export as CSV</span> 
-        </div>
-        
+
+
     </div>
-    <div class="rightbar">
+    <!-- <div class="rightbar">
         <span>
             <i class="fa fa-user"></i> Biswaranjan Rout</span>
         <a href="#">
             <i class="fa fa-sign-out"></i> Logout</a>
-    </div>
+    </div> -->
     <div class="container">
         <div class="task-type">
             <ul>
@@ -80,7 +101,7 @@
                 </li>
             </ul>
         </div>
-        <input type="text" class="add-task" />
+        <input type="text" class="add-task" placeholder="Add new task" />
         <i class="fa fa-plus add-button"></i>
         <div class="things-list">
             <ul>
@@ -102,29 +123,15 @@
                 </li>
                 <li>
                     <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Withdraw cash
+                    <i class="fa fa-circle-o"></i> Fill up appraisail form
                     <i class="fa fa-comments"></i>
                 </li>
                 <li>
                     <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Withdraw cash
+                    <i class="fa fa-circle-o"></i> Write Notes
                     <i class="fa fa-comments"></i>
                 </li>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Withdraw cash
-                    <i class="fa fa-comments"></i>
-                </li>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Withdraw cash
-                    <i class="fa fa-comments"></i>
-                </li>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Withdraw cash
-                    <i class="fa fa-comments"></i>
-                </li>
+                
 
             </ul>
         </div>
