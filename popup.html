@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <title>Things to do home</title>
 </head>
+
 <body>
     <header>
-        <i class="fa fa-bars" aria-hidden="true"></i>
+        <i class="fa fa-bars" id="hamburger-menu"></i>
         <span class="logo">Things to do</span>
         <span class="profile">
             <!-- <img src="https://avatars2.githubusercontent.com/u/18741615?v=4" alt=""> -->
@@ -18,29 +20,63 @@
         </span>
     </header>
     <div class="sidebar">
-        <img src="https://avatars2.githubusercontent.com/u/18741615?v=4" class="main-profile-pic">
+        <div class="profile">
+            <img src="https://avatars2.githubusercontent.com/u/18741615?v=4" class="main-profile-pic">
+            <span class="profile-name">
+                Biswaranjan Rout
+            </span>
+            <span class="profile-email">bisu9861861136@gmail.com</span>
+        </div>
+        <div class="profile-content">
+            <h3>Select Tasks</h3>
+            <span class="filter-icon selected"><i class="fa fa-paper-plane"></i>Pending</span> 
+            <span class="filter-icon selected"><i class="fa fa-paper-plane-o"></i>Complete</span> 
+            <span class="filter-icon "><i class="fa fa-globe"></i>Show All</span> 
+            <h3>Filter By Date</h3>
+            <span class="filter-icon"><i class="fa fa-calendar-o"></i>Week</span> 
+            <span class="filter-icon"><i class="fa fa-calendar"></i>Month</span> 
+            <span class="filter-icon "><i class="fa fa-cog"></i>Custom</span> 
+            <span class="filter-icon selected"><i class="fa fa-globe"></i>All</span> 
+            <input type="text" class="filter-date">
+            <input type="text" class="filter-date">
+            <h3>Task Category</h3>
+            <span class="filter-icon-list"><i class="fa fa-circle-o"></i><i class="fa fa-briefcase"></i>Work</span> 
+            <span class="filter-icon-list"><i class="fa fa-circle-o"></i><i class="fa fa-user"></i>Personal</span> 
+            <span class="filter-icon-list"><i class="fa fa-check-circle"></i><i class="fa fa-home"></i>Home</span> 
+            <span class="filter-icon-list"><i class="fa fa-circle-o"></i><i class="fa fa-tasks"></i>Other</span> 
+            <h3>26 Task(s) found</h3>
+            <span class="filter-icon selected"><i class="fa fa-paper-plane-o"></i>Export as CSV</span> 
+        </div>
+        
     </div>
     <div class="rightbar">
-        Logout
+        <span>
+            <i class="fa fa-user"></i> Biswaranjan Rout</span>
+        <a href="#">
+            <i class="fa fa-sign-out"></i> Logout</a>
     </div>
     <div class="container">
         <div class="task-type">
             <ul>
                 <li class="active">
-                    <i class="fa fa-briefcase" aria-hidden="true"></i><br />
-                    <span>Work</span>     
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                    <br />
+                    <span>Work</span>
                 </li>
                 <li>
-                    <i class="fa fa-user" aria-hidden="true"></i><br />
-                    <span>Personal</span>     
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <br />
+                    <span>Personal</span>
                 </li>
                 <li>
-                    <i class="fa fa-home" aria-hidden="true"></i><br />
-                    <span>Home</span>     
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    <br />
+                    <span>Home</span>
                 </li>
                 <li>
-                    <i class="fa fa-tasks" aria-hidden="true"></i><br />
-                    <span>Other</span>     
+                    <i class="fa fa-tasks" aria-hidden="true"></i>
+                    <br />
+                    <span>Other</span>
                 </li>
             </ul>
         </div>
@@ -48,24 +84,54 @@
         <i class="fa fa-plus add-button"></i>
         <div class="things-list">
             <ul>
-                <li><span class="date">12-Oct-17</span> <i class="fa fa-circle-o"></i> Go fishing on Varthur lake</li>
-                <li><span class="date">12-Oct-17</span> 
-                    <i class="fa fa-check-circle"></i> <span class="completed">
-                    CR059 Add Terms &amp; Conditions
+                <li>
+                    <span class="date">12-Oct-17</span>
+                    <i class="fa fa-circle-o"></i> Go fishing on Varthur lake</li>
+                <li>
+                    <span class="date">12-Oct-17</span>
+                    <i class="fa fa-check-circle"></i>
+                    <span class="completed">
+                        CR059 Add Terms &amp; Conditions
                     </span>
                     <i class="fa fa-comments"></i>
-                </li>            
-                <li><span class="date">12-Oct-17</span> <i class="fa fa-circle-o"></i> Withdraw cash <i class="fa fa-comments"></i></li>            
-                <li><span class="date">12-Oct-17</span> <i class="fa fa-circle-o"></i> Withdraw cash <i class="fa fa-comments"></i></li>            
-                <li><span class="date">12-Oct-17</span> <i class="fa fa-circle-o"></i> Withdraw cash <i class="fa fa-comments"></i></li>            
-                <li><span class="date">12-Oct-17</span> <i class="fa fa-circle-o"></i> Withdraw cash <i class="fa fa-comments"></i></li>            
-                <li><span class="date">12-Oct-17</span> <i class="fa fa-circle-o"></i> Withdraw cash <i class="fa fa-comments"></i></li>            
-                <li><span class="date">12-Oct-17</span> <i class="fa fa-circle-o"></i> Withdraw cash <i class="fa fa-comments"></i></li>            
-               
+                </li>
+                <li>
+                    <span class="date">12-Oct-17</span>
+                    <i class="fa fa-circle-o"></i> Withdraw cash
+                    <i class="fa fa-comments"></i>
+                </li>
+                <li>
+                    <span class="date">12-Oct-17</span>
+                    <i class="fa fa-circle-o"></i> Withdraw cash
+                    <i class="fa fa-comments"></i>
+                </li>
+                <li>
+                    <span class="date">12-Oct-17</span>
+                    <i class="fa fa-circle-o"></i> Withdraw cash
+                    <i class="fa fa-comments"></i>
+                </li>
+                <li>
+                    <span class="date">12-Oct-17</span>
+                    <i class="fa fa-circle-o"></i> Withdraw cash
+                    <i class="fa fa-comments"></i>
+                </li>
+                <li>
+                    <span class="date">12-Oct-17</span>
+                    <i class="fa fa-circle-o"></i> Withdraw cash
+                    <i class="fa fa-comments"></i>
+                </li>
+                <li>
+                    <span class="date">12-Oct-17</span>
+                    <i class="fa fa-circle-o"></i> Withdraw cash
+                    <i class="fa fa-comments"></i>
+                </li>
+
             </ul>
         </div>
-        
+
     </div>
+    <script src="jquery-3.2.1.min.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>

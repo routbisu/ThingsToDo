@@ -80,6 +80,7 @@ header span.profile img {
 
 .task-type ul li:hover, .task-type ul li.active {
     background: #EAEDF6;
+    transition: 0.4s;
     border-radius: 3px;
 }
 
@@ -105,7 +106,8 @@ header span.profile img {
 }
 
 .things-list ul li:hover {
-    background: #FAFAFA;
+    background: #EFF2FC;
+    transition: 0.4s;
 }
 
 .things-list i {
@@ -147,7 +149,6 @@ i.fa-comments {
 
 /* Styles for the sidebar */
 .sidebar {
-    width: 250px;
     position: fixed;
     top: 50;
     left: 0;
@@ -156,8 +157,54 @@ i.fa-comments {
     z-index: 100;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
     padding: 15px 10px;
+    font-size: 11px;
+    width: 0px;
     visibility: hidden;
     /*opacity: 0.96;*/
+}
+
+.visible-menu {
+    visibility: visible;    
+    width: 250px;
+    transition: 0.2s;
+}
+
+.hidden-menu {
+    visibility: hidden;    
+    transition: 0.2s;
+}
+
+.sidebar > .profile {
+    width: 100%;
+    margin-bottom: -15px;
+}
+
+.main-profile-pic {
+    float: left;
+    border-radius: 50%;
+    width: 50px;
+    box-shadow: 0px 0px 2px rgba(0,0,0,0.2);
+    margin: 0px 10px 5px 5px;
+}
+
+.profile-name {
+    float: left;
+    font-size: 14px;
+    color: #696969;
+    text-align: left;
+    margin-top: 8px;
+}
+
+.profile-email {
+    float: left;
+    font-size: 10px;
+    color: #AAA;
+    text-align: left;
+}
+
+.profile-content {
+    padding-top: 70px;
+    padding-left: 6px;
 }
 
 .rightbar {
@@ -169,10 +216,75 @@ i.fa-comments {
     z-index: 100;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
     padding: 10px;
+    border-radius: 3px;
     /*opacity: 0.96;*/
 }
 
-.main-profile-pic {
-    border-radius: 50%;
-    width: 50px;
+.rightbar a {
+    color: #888;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.rightbar i {
+    margin-right: 7px;
+}
+
+.rightbar span {
+    display: block;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #F6F6F6;
+}
+
+/* Left profile content */
+.profile-content > h3 {
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.filter-icon {
+    padding: 3px 5px;
+    border: 1px solid #888;
+    color: #888;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.filter-icon > i {
+    margin-right: 5px;
+}
+
+.filter-icon-list {
+    display: block;
+    padding: 5px;
+}
+
+.filter-icon-list:hover {
+    background: #EFF2FC;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.filter-icon-list > i {
+    margin-right: 5px;
+}
+
+.selected {
+    color: #FFF;
+    background: #193A8F;
+    border: 1px solid #193A8F;
+}
+
+.filter-date {
+    font-family: 'Open Sans', 'Segoe UI', verdana, sans-serif;
+    width: 100px;
+    padding: 3px 6px;
+    margin-top: 7px;
+    border-radius: 3px;
+    border: 1px solid #888;
+    color: #888;
+    font-size: 11px;
 }
