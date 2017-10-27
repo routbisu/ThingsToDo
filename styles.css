@@ -300,11 +300,12 @@ i.fa-comments {
     z-index: 1000; /* Sit on top */
     left: 0;
     top: 0;
-    width: 500px; /* Full width */
+    width: 480px; /* Full width */
     height: 552px; /* Full height */
     overflow: hidden; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+    padding: 10px;
 }
 
 .comments-popup-content {
@@ -327,13 +328,35 @@ i.fa-comments {
 
 .comments-popup-content p {
     margin-top: 7px;
-    font-size: 12px;
+    font-size: 13px;
     color: #888;
 }
 
 .comments-popup-content p.comment {
     margin-top: 7px;
-    font-size: 10px;
+    font-size: 11px;
     color: #999;
+}
+
+.comments-header > h4 {
+    display: inline;
+    float: left;
+    margin: 5px; 
+}
+
+.comments-header > .task-buttons {
+    display: inline;
+    float: right;
+    margin: 5px 2px; 
+}
+
+.comments-body {
+    clear: both;
+    padding: 5px;
+}
+
+.comment-time {
+    font-size: 9px;
+    color: #8BA6EB;
     text-align: right;
 }
