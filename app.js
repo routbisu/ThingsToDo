@@ -41,19 +41,26 @@ $(document).ready(function () {
 
     // Hide comments popup on app start
     $('.comments-popup').hide();
+
+    // $('#customGoogleButton').click(function () {
+    //     console.log('Hello');
+    // });
 });
 
 // Initialize Firebase
-var config = {
-    apiKey: "AIzaSyBKZcsYQNgGzlrJHwrQVP1rUiWu_FHNGfM",
-    authDomain: "ziptag-thingstodo.firebaseapp.com",
-    databaseURL: "https://ziptag-thingstodo.firebaseio.com",
-    projectId: "ziptag-thingstodo",
-    storageBucket: "ziptag-thingstodo.appspot.com",
-    messagingSenderId: "52824648989"
-};
+// var config = {
+//     apiKey: "AIzaSyBKZcsYQNgGzlrJHwrQVP1rUiWu_FHNGfM",
+//     authDomain: "ziptag-thingstodo.firebaseapp.com",
+//     databaseURL: "https://ziptag-thingstodo.firebaseio.com",
+//     projectId: "ziptag-thingstodo",
+//     storageBucket: "ziptag-thingstodo.appspot.com",
+//     messagingSenderId: "52824648989"
+// };
 
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
+// firebase.auth().useDeviceLanguage();
 
-// Google federated login provider
-var googleProvider = new firebase.auth.GoogleAuthProvider();
+// // Google federated login provider
+// var googleProvider = new firebase.auth.GoogleAuthProvider();
+
+
