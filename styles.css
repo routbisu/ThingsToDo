@@ -360,3 +360,29 @@ i.fa-comments {
     color: #8BA6EB;
     text-align: right;
 }
+
+/* Login screen */
+.login-container {
+    text-align: center;
+    padding: 10px;
+}
+
+.login-container span {
+    display: block;
+    margin-top: 10px;
+    color: #BBB;
+    font-size: 10px;
+}
+
+.login-container span a {
+    text-decoration: none;
+    color: #BBB;
+}
+.google-login-button {
+    background: #4285F4;
+    color: #FFF;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #4285F4;
+    cursor: pointer;
+}

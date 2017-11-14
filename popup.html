@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="52824648989-f39n7tdg0uej314aaj082lns5po6a6er.apps.googleusercontent.com">
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <title>Things to do home</title>
@@ -101,6 +102,14 @@
         </div>
 
     </div>
+    <div class="login-container">
+        <button class="google-login-button" id="customGoogleButton">
+            <i class="fa fa-google" aria-hidden="true"></i>
+            Login with Google Account
+        </button>
+        <span><a href="#"><i class="fa fa-bell"></i> Things To Do</a>
+            &bull; <a href="#">About</a></span>
+    </div>
     <div class="container">
         <div class="task-type">
             <ul>
@@ -163,6 +172,11 @@
 
     </div>
     <script src="jquery-3.2.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
+     
     <script src="app.js"></script>
 </body>
 
