@@ -7,6 +7,14 @@ body {
     margin: 0px;
 }
 
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
 *:focus {
     outline: none;
 }
@@ -426,4 +434,15 @@ i.fa-comments {
 
 .footer {
     margin-top: 50px;
+}
+
+.error-msg {
+    font-size: 11px;
+    color: #F00;
+}
+
+.login-logo {
+    color: #AAA;
+    font-size: 12px;
+    margin: 20px 0px;
 }

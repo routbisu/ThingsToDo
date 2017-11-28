@@ -2,13 +2,16 @@
 // Global values
 var isMenuOpen = false;
 
+// Reset login form
+var resetLoginForm = function() {
+    $('#txtEmailLogin').val('');
+    $('#txtPasswordLogin').val('');
+    $('#loginLoader').hide();
+    $('#incorectLoginMsg').hide();
+}
 
 $(document).ready(function () {
-    //$('.sidebar').hide();
-    // Hide login div
-    $('.container').hide();
 
-    // Initialize firebase app
     var config = {
         apiKey: "AIzaSyBKZcsYQNgGzlrJHwrQVP1rUiWu_FHNGfM",
         authDomain: "ziptag-thingstodo.firebaseapp.com",
@@ -20,64 +23,55 @@ $(document).ready(function () {
     
     firebase.initializeApp(config);
     firebase.auth().useDeviceLanguage();
-
-    // Handle hamburger menu
-    $('header').click(function (evt) {
-        evt.stopPropagation();
-        //$('.sidebar').removeClass('hidden');
-        if (isMenuOpen) {
-            $('#sidebar-content').hide();
-            $('.sidebar').removeClass('visible-menu');
-            $('.sidebar').addClass('hidden-menu');
-            $('#hamburger-menu').removeClass('fa-times');
-            $('#hamburger-menu').addClass('fa-bars');
-        } else {
-            $('.sidebar').removeClass('hidden-menu');
-            $('.sidebar').addClass('visible-menu');
-            $('#sidebar-content').show();
-            $('#hamburger-menu').removeClass('fa-bars');
-            $('#hamburger-menu').addClass('fa-times');
-        }
-        isMenuOpen = !isMenuOpen;
-    });
-
-    // Stop propagation for clicks on sidebar
-    $('.sidebar').click(function (evt) {
-        evt.stopPropagation();
-    });
-
-    // Handle click outside to close menu
-    $(document).click(function () {
-        $('#sidebar-content').hide();
-        $('.sidebar').removeClass('visible-menu');
-        $('.sidebar').addClass('hidden-menu');
-        $('#hamburger-menu').removeClass('fa-times');
-        $('#hamburger-menu').addClass('fa-bars');
-        isMenuOpen = !isMenuOpen;
-    });
-
-    // Hide comments popup on app start
+    
+    // Hide all divs that are not required at initialization
     $('.comments-popup').hide();
+    $('.login-container').hide();
+    $('.container').hide();
+    resetLoginForm();
 
-    // $('#customGoogleButton').click(function () {
-    //     console.log('Hello');
-    // });
+    // Stop the form from getting submitted
+    $('#loginForm').submit(function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    // If no user is logged in then show the login division
+    console.log(firebase.auth().currentUser);
+    firebase.auth().onAuthStateChanged(function(user) {
+        console.log(user);
+        if (user) {
+          // User is logged in.
+          $('.container').show();
+          $('.login-container').hide();
+          $('header').show();
+        } else {
+          // No user is logged in.
+          $('.login-container').show();
+          $('.container').hide();
+          $('header').hide();
+        }
+    });
+
+    // Event handler for login button
+    $('#btnAuthLogin').click(function() {
+        // Show loader
+        $('#loginLoader').show();
+        $('#incorectLoginMsg').hide();
+
+        var email = $('#txtEmailLogin').val();
+        var password = $('#txtPasswordLogin').val();
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(obj => {
+                resetLoginForm();
+            })
+            .catch(err => {
+                $('#loginLoader').hide();
+                $('#incorectLoginMsg').show();
+            });
+    });
+   
 });
-
-// Initialize Firebase
-// var config = {
-//     apiKey: "AIzaSyBKZcsYQNgGzlrJHwrQVP1rUiWu_FHNGfM",
-//     authDomain: "ziptag-thingstodo.firebaseapp.com",
-//     databaseURL: "https://ziptag-thingstodo.firebaseio.com",
-//     projectId: "ziptag-thingstodo",
-//     storageBucket: "ziptag-thingstodo.appspot.com",
-//     messagingSenderId: "52824648989"
-// };
-
-// firebase.initializeApp(config);
-// firebase.auth().useDeviceLanguage();
-
-// // Google federated login provider
-// var googleProvider = new firebase.auth.GoogleAuthProvider();
 
 
