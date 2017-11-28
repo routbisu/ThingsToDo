@@ -2,8 +2,25 @@
 // Global values
 var isMenuOpen = false;
 
+
 $(document).ready(function () {
     //$('.sidebar').hide();
+    // Hide login div
+    $('.container').hide();
+
+    // Initialize firebase app
+    var config = {
+        apiKey: "AIzaSyBKZcsYQNgGzlrJHwrQVP1rUiWu_FHNGfM",
+        authDomain: "ziptag-thingstodo.firebaseapp.com",
+        databaseURL: "https://ziptag-thingstodo.firebaseio.com",
+        projectId: "ziptag-thingstodo",
+        storageBucket: "ziptag-thingstodo.appspot.com",
+        messagingSenderId: "52824648989"
+    };
+    
+    firebase.initializeApp(config);
+    firebase.auth().useDeviceLanguage();
+
     // Handle hamburger menu
     $('header').click(function (evt) {
         evt.stopPropagation();

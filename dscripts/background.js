@@ -1,5 +1,7 @@
 // Handle Google Login button
 // Initialize Firebase
+//alert('Background script running');
+
 var config = {
     apiKey: "AIzaSyBKZcsYQNgGzlrJHwrQVP1rUiWu_FHNGfM",
     authDomain: "ziptag-thingstodo.firebaseapp.com",

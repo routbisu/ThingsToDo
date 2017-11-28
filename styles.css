@@ -365,6 +365,7 @@ i.fa-comments {
 .login-container {
     text-align: center;
     padding: 10px;
+    margin-top: 10px;
 }
 
 .login-container span {
@@ -381,8 +382,48 @@ i.fa-comments {
 .google-login-button {
     background: #4285F4;
     color: #FFF;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 8px 10px;
+    border-radius: 3px;
     border: 1px solid #4285F4;
     cursor: pointer;
+    width: 190px;
+    margin-top: 10px;
+}
+.login-textbox-holder {
+    padding: 0;
+    margin: 0;
+}
+
+.login-textbox {
+    margin: auto;
+    width: 350px;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #DDD;
+    border-radius: 2px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-family: 'Montserrat', 'Open Sans', 'Segoe UI', verdana, sans-serif;
+    border-left: none;
+}
+
+.login-textbox:focus {
+    border-bottom: 1px solid #87B1F8;
+    transition: 0.6s;
+}
+
+.login-textbox-icon {
+    color: #AAA;
+}
+
+.sign-up-text {
+    font-size: 11px !important;
+}
+
+.sign-up-text a {
+    color: #F47422 !important;
+}
+
+.footer {
+    margin-top: 50px;
 }

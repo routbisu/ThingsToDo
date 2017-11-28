@@ -4,7 +4,7 @@
     "description": "This is a simple to-do extension for the Google Chrome browser.",
     "background": {
         "scripts": ["dscripts/jquery-3.2.1.min.js", "dscripts/firebase.js", "dscripts/background.js"],
-        "persistent": false
+        "persistent": true
     },
     "version": "1.0.0",
     "icons": {
