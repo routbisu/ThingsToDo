@@ -192,6 +192,18 @@ $(document).ready(function () {
                 });
         }
     });
+
+    // Handle logout
+    $('#btnLogout').click(function() {
+        $('#sidebar-content').hide();
+        $('.sidebar').removeClass('visible-menu');
+        $('.sidebar').addClass('hidden-menu');
+        $('#hamburger-menu').removeClass('fa-times');
+        $('#hamburger-menu').addClass('fa-bars');
+        isMenuOpen = !isMenuOpen;
+        
+        auth.signOut();        
+    });
 });
 
 

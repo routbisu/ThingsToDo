@@ -266,6 +266,13 @@ i.fa-comments {
     cursor: pointer;
 }
 
+.filter-icon:hover {
+    color: #FFF;
+    background: #193A8F;
+    border: 1px solid #193A8F;
+    transition: 0.4s;
+}
+
 .filter-icon > i {
     margin-right: 5px;
 }
@@ -452,4 +459,12 @@ i.fa-comments {
     font-size: 12px;
     font-weight: 600;
     margin: 20px 0px;
+}
+
+/* AJAX Loader for the content page */
+#content-loader {
+    display: inline;
+    position: fixed;
+    top: 72px;
+    right: 25px;
 }
