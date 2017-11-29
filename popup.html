@@ -167,22 +167,22 @@
     <div class="container">
         <div class="task-type">
             <ul>
-                <li class="active">
+                <li class="active" id="topTaskSelectorWork">
                     <i class="fa fa-briefcase" aria-hidden="true"></i>
                     <br />
                     <span>Work</span>
                 </li>
-                <li>
+                <li id="topTaskSelectorPersonal">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     <br />
                     <span>Personal</span>
                 </li>
-                <li>
+                <li id="topTaskSelectorHome">
                     <i class="fa fa-home" aria-hidden="true"></i>
                     <br />
                     <span>Home</span>
                 </li>
-                <li>
+                <li id="topTaskSelectorOther">
                     <i class="fa fa-tasks" aria-hidden="true"></i>
                     <br />
                     <span>Other</span>
@@ -190,9 +190,11 @@
             </ul>
             <img src="loader.gif" id="content-loader">
         </div>
-        <input type="text" class="add-task" placeholder="Add new task" />
-        <i class="fa fa-plus add-button"></i>
-        <div class="things-list">
+        
+        <div class="things-list" id="workList">
+            <div class="things-list-heading"><i class="fa fa-briefcase"></i> Work</div>
+            <input type="text" class="add-task" placeholder="Add new task" id="txtAddTaskWork" />
+            <i class="fa fa-plus add-button"></i>
             <ul>
                 <li>
                     <span class="date">12-Oct-17</span>
@@ -220,8 +222,23 @@
                     <i class="fa fa-circle-o"></i> Write Notes
                     <i class="fa fa-comments"></i>
                 </li>
+            </ul>
+        </div>
 
-
+        <div class="things-list" id="personalList">
+            <div class="things-list-heading"><i class="fa fa-user"></i> Personal</div>
+            <input type="text" class="add-task" placeholder="Add new task" id="txtAddTaskPersonal" />
+            <i class="fa fa-plus add-button"></i>
+            <ul>
+                <li>
+                    <span class="date">12-Oct-17</span>
+                    <i class="fa fa-circle-o"></i> Go fishing on Varthur lake</li>
+                
+                <li>
+                    <span class="date">12-Oct-17</span>
+                    <i class="fa fa-circle-o"></i> Withdraw cash
+                    <i class="fa fa-comments"></i>
+                </li>
             </ul>
         </div>
 

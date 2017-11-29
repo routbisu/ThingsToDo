@@ -151,12 +151,12 @@ i.fa-comments {
 
 .add-task {
     font-family: 'Montserrat', 'Open Sans', 'Segoe UI', verdana, sans-serif; 
-    font-size: 12px;
-    border-radius: 3px;
+    font-size: 11px;
+    border-radius: 2px;
     border: 1px solid #EAEAEA;
     padding: 6px;
-    margin: 2px 8px 0px 6px;
-    width: 450px;
+    margin: 6px 8px 0px 3px;
+    width: 444px;
 }
 
 /* Styles for the sidebar */
@@ -467,4 +467,10 @@ i.fa-comments {
     position: fixed;
     top: 72px;
     right: 25px;
+}
+
+.things-list-heading {
+    font-size: 11px !important;
+    color: #183384;
+    margin: 15px 3px -2px 2px;
 }

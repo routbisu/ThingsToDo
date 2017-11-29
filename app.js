@@ -2,6 +2,13 @@
 // Global values
 var isMenuOpen = false;
 
+var SelectedTaskTypes = {
+    Work: true,
+    Personal: false,
+    Home: false,
+    Other: false
+};
+
 // Firebase initialization
 var config = {
     apiKey: "AIzaSyBKZcsYQNgGzlrJHwrQVP1rUiWu_FHNGfM",
@@ -41,6 +48,7 @@ $(document).ready(function () {
     $('.login-container').hide();
     $('.container').hide();
     $('#login-text').hide();
+    $('#content-loader').hide();
 
     resetLoginForm();
     resetRegisterForm();
@@ -204,6 +212,45 @@ $(document).ready(function () {
         
         auth.signOut();        
     });
+
+    // Handle task selector - Top section
+    $('#topTaskSelectorWork').click(function() {
+        SelectedTaskTypes.Work = !SelectedTaskTypes.Work;
+        if(SelectedTaskTypes.Work) {
+            $('#topTaskSelectorWork').addClass('active');
+        } else {
+            $('#topTaskSelectorWork').removeClass('active');
+        }
+    });
+
+    $('#topTaskSelectorPersonal').click(function() {
+        SelectedTaskTypes.Personal = !SelectedTaskTypes.Personal;
+        if(SelectedTaskTypes.Personal) {
+            $('#topTaskSelectorPersonal').addClass('active');
+        } else {
+            $('#topTaskSelectorPersonal').removeClass('active');
+        }
+    });
+    
+    $('#topTaskSelectorHome').click(function() {
+        SelectedTaskTypes.Home = !SelectedTaskTypes.Home;
+        if(SelectedTaskTypes.Home) {
+            $('#topTaskSelectorHome').addClass('active');
+        } else {
+            $('#topTaskSelectorHome').removeClass('active');
+        }
+    });
+
+    $('#topTaskSelectorOther').click(function() {
+        SelectedTaskTypes.Other = !SelectedTaskTypes.Other;
+        if(SelectedTaskTypes.Other) {
+            $('#topTaskSelectorOther').addClass('active');
+        } else {
+            $('#topTaskSelectorOther').removeClass('active');
+        }
+    });
+
+// End of document.ready
 });
 
 
