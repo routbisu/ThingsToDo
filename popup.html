@@ -108,7 +108,8 @@
             <br />Things To Do
         </div>
         <div class="error-msg margin-bottom-10" id="incorectLoginMsg">
-            <i class="fa fa-exclamation-circle"></i> &nbsp;Wrong Email Or Password
+            <i class="fa fa-exclamation-circle"></i> &nbsp;
+            <span id="incorrect-login-msg" class="original-span">Wrong Email Or Password</span>
         </div>
         <div id="loginLoader" class="margin-bottom-10">
             <img src="loader.gif">
@@ -128,11 +129,32 @@
             </button>
         </form>
 
-        <span class="sign-up-text">Don't have an account?
-            <a href="#">Sign up.</a>
+        <form id="registerForm">
+            <div class="login-textbox-holder">
+                <i class="fa fa-user login-textbox-icon" aria-hidden="true"></i>
+                <input type="text" id="txtNameRegister" class="login-textbox" placeholder="Name" />
+            </div>
+            <div class="login-textbox-holder">
+                <i class="fa fa-envelope-square login-textbox-icon" aria-hidden="true"></i>
+                <input type="text" id="txtEmailRegister" class="login-textbox" placeholder="Email" />
+            </div>
+            <div class="login-textbox-holder">
+                <i class="fa fa-lock login-textbox-icon" aria-hidden="true"></i>
+                <input type="password" id="txtPasswordRegister" class="login-textbox" placeholder="Password" />
+            </div>
+            <button type="submit" class="google-login-button" id="btnAuthRegister">
+                <i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Sign Up
+            </button>
+        </form>
+
+        <span class="sign-up-text" id="register-text">Don't have an account?
+            <a href="#" id="btnRegisterText">Sign up.</a>
         </span>
-        <span class="sign-up-text">
-            <a href="#">Forgot Password?</a>
+        <span class="sign-up-text" id="login-text">Already have an account?
+            <a href="#" id="btnLoginText">Go to Login.</a>
+        </span>
+        <span class="sign-up-text" id="forgot-password-text">
+            <a href="#" id="btnForgotPassword">Forgot Password?</a>
         </span>
         <div class="footer">
             <span>

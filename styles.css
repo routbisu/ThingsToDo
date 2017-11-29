@@ -441,8 +441,15 @@ i.fa-comments {
     color: #F00;
 }
 
+.original-span {
+    display: inline !important;
+    font-size: 11px !important;
+    color: #F00 !important;
+}
+
 .login-logo {
-    color: #AAA;
+    color: #1E3E92;
     font-size: 12px;
+    font-weight: 600;
     margin: 20px 0px;
 }
