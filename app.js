@@ -74,6 +74,11 @@ $(document).ready(function () {
             $('.container').show();
             $('.login-container').hide();
             $('header').show();
+
+            // Show user information in Profile pic section
+            $('#userDisplayName').text(user.displayName);
+            $('#userDisplayEmail').text(user.email);
+            
         } else {
             // No user is logged in.
             $('.login-container').show();
