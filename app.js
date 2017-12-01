@@ -1,6 +1,7 @@
 //chrome.browserAction.setBadgeText({ text: "" });
 // Global values
 var isMenuOpen = false;
+var loggedInUser = null;
 
 var SelectedTaskTypes = {
     Work: true,
@@ -22,6 +23,7 @@ var config = {
 firebase.initializeApp(config);
 firebase.auth().useDeviceLanguage();
 var auth = firebase.auth();
+var database = firebase.database();
 
 // Reset login form
 var resetLoginForm = function () {
@@ -41,6 +43,14 @@ var resetRegisterForm = function () {
     $('#registerForm').hide();
 }
 
+// Hide all tasks lists
+function hideTasksLists() {
+    if(SelectedTaskTypes.Work) $('#workList').fadeIn(); else $('#workList').fadeOut();
+    if(SelectedTaskTypes.Home) $('#homeList').fadeIn(); else $('#homeList').fadeOut();
+    if(SelectedTaskTypes.Personal) $('#personalList').fadeIn(); else $('#personalList').fadeOut();
+    if(SelectedTaskTypes.Other) $('#otherList').fadeIn(); else $('#otherList').fadeOut();
+}
+
 $(document).ready(function () {
 
     // Hide all divs that are not required at initialization
@@ -50,6 +60,9 @@ $(document).ready(function () {
     $('#login-text').hide();
     $('#content-loader').hide();
 
+    // Hide all tasks lists
+    hideTasksLists();
+    
     resetLoginForm();
     resetRegisterForm();
 
@@ -71,6 +84,8 @@ $(document).ready(function () {
         console.log(user);
         if (user) {
             // User is logged in.
+            loggedInUser = user;
+
             $('.container').show();
             $('.login-container').hide();
             $('header').show();
@@ -226,6 +241,7 @@ $(document).ready(function () {
         } else {
             $('#topTaskSelectorWork').removeClass('active');
         }
+        hideTasksLists();
     });
 
     $('#topTaskSelectorPersonal').click(function() {
@@ -235,6 +251,7 @@ $(document).ready(function () {
         } else {
             $('#topTaskSelectorPersonal').removeClass('active');
         }
+        hideTasksLists();
     });
     
     $('#topTaskSelectorHome').click(function() {
@@ -244,6 +261,7 @@ $(document).ready(function () {
         } else {
             $('#topTaskSelectorHome').removeClass('active');
         }
+        hideTasksLists();
     });
 
     $('#topTaskSelectorOther').click(function() {
@@ -253,6 +271,7 @@ $(document).ready(function () {
         } else {
             $('#topTaskSelectorOther').removeClass('active');
         }
+        hideTasksLists();
     });
 
 // End of document.ready
