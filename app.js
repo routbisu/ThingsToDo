@@ -2,6 +2,7 @@
 // Global values
 var isMenuOpen = false;
 var loggedInUser = null;
+var loggedInUserID = null;
 
 var SelectedTaskTypes = {
     Work: true,
@@ -10,14 +11,20 @@ var SelectedTaskTypes = {
     Other: false
 };
 
+var userPreferences = {
+    // Can be pending, complete, all
+    taskType: null,
+    taskCategory: null
+};
+
 // Firebase initialization
 var config = {
-    apiKey: "AIzaSyBKZcsYQNgGzlrJHwrQVP1rUiWu_FHNGfM",
-    authDomain: "ziptag-thingstodo.firebaseapp.com",
-    databaseURL: "https://ziptag-thingstodo.firebaseio.com",
-    projectId: "ziptag-thingstodo",
-    storageBucket: "ziptag-thingstodo.appspot.com",
-    messagingSenderId: "52824648989"
+    apiKey: "AIzaSyA2QZh5d0W7pV1HDBdfs1ODNDwIc5xvQn8",
+    authDomain: "routbisu-thingstodo.firebaseapp.com",
+    databaseURL: "https://routbisu-thingstodo.firebaseio.com",
+    projectId: "routbisu-thingstodo",
+    storageBucket: "routbisu-thingstodo.appspot.com",
+    messagingSenderId: "866999882674"
 };
 
 firebase.initializeApp(config);
@@ -51,6 +58,56 @@ function hideTasksLists() {
     if(SelectedTaskTypes.Other) $('#otherList').fadeIn(); else $('#otherList').fadeOut();
 }
 
+//*****************************************************
+// DAL Operations Section
+//*****************************************************
+
+// Adds a new task in firebase DB and returns a promise
+function addNewTask(categoryName, taskDescription) {
+    var tasksRef = database.ref('tasks');
+
+    var newTask = {
+        category: categoryName,
+        user: loggedInUserID,
+        desc: taskDescription,
+        add_date: (new Date()).getTime(),
+        completed_date: 0,
+        comments: false
+    };
+
+    return tasksRef.push(newTask);
+}
+
+// Add a comment for a task, returns callbacks to handle success and error
+function addNewComment(taskID, commentText, success, error) {
+    try {
+        var commentRef = database.ref('tasks/' + taskID + '/comments');
+        
+        var newComment = {
+            desc: commentText,
+            add_date: (new Date()).getTime()
+        }
+
+        return commentRef.push(newComment).then(function() {
+            success();
+        }, function() {
+            error();
+        });
+
+    } catch(ex) {
+        handleError('Task not found');
+    }
+} 
+
+// Mark task as complete
+function markTaskComplete() {
+
+}
+
+function deleteTask() {
+
+}
+
 $(document).ready(function () {
 
     // Hide all divs that are not required at initialization
@@ -65,6 +122,12 @@ $(document).ready(function () {
     
     resetLoginForm();
     resetRegisterForm();
+
+    // Get user preferences from localstorage or Initialize
+    userPreferences.taskType = 
+        localStorage.getItem('TaskType') ? localStorage.getItem('TaskType') : 'pending';
+    userPreferences.taskCategory = 
+        localStorage.getItem('TaskType') ? localStorage.getItem('TaskType').split(' ') : ['work'];
 
     // Stop the form from getting submitted
     $('#loginForm').submit(function (e) {
@@ -85,6 +148,7 @@ $(document).ready(function () {
         if (user) {
             // User is logged in.
             loggedInUser = user;
+            loggedInUserID = user.uid;
 
             $('.container').show();
             $('.login-container').hide();
