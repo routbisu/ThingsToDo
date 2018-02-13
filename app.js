@@ -129,6 +129,11 @@ $(document).ready(function () {
     userPreferences.taskCategory = 
         localStorage.getItem('TaskType') ? localStorage.getItem('TaskType').split(' ') : ['work'];
 
+    $('.type-selector').click(function() {
+        $(this).find('i.fa-circle-o').removeClass('fa-circle-o').addClass('fa-check-circle');
+        $(this).find('i.fa-circle-o').removeClass('fa-check-circle').addClass('fa-circle-o');
+    });
+
     // Stop the form from getting submitted
     $('#loginForm').submit(function (e) {
         e.preventDefault();
