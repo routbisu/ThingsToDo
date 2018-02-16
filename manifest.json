@@ -16,7 +16,7 @@
         },
         "default_popup": "popup.html"
     },
-    
+    "content_security_policy": "script-src 'self' https://routbisu-thingstodo.firebaseio.com https://s-usc1c-nss-204.firebaseio.com; object-src 'self'",
     "permissions": [
         "activeTab",
         "storage"

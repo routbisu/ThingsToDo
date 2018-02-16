@@ -4,18 +4,7 @@ var isMenuOpen = false;
 var loggedInUser = null;
 var loggedInUserID = null;
 
-var SelectedTaskTypes = {
-    Work: true,
-    Personal: false,
-    Home: false,
-    Other: false
-};
-
-var userPreferences = {
-    // Can be pending, complete, all
-    taskType: null,
-    taskCategory: null
-};
+var UserPreferences = {};
 
 // Firebase initialization
 var config = {
@@ -50,12 +39,61 @@ var resetRegisterForm = function () {
     $('#registerForm').hide();
 }
 
-// Hide all tasks lists
-function hideTasksLists() {
-    if(SelectedTaskTypes.Work) $('#workList').fadeIn(); else $('#workList').fadeOut();
-    if(SelectedTaskTypes.Home) $('#homeList').fadeIn(); else $('#homeList').fadeOut();
-    if(SelectedTaskTypes.Personal) $('#personalList').fadeIn(); else $('#personalList').fadeOut();
-    if(SelectedTaskTypes.Other) $('#otherList').fadeIn(); else $('#otherList').fadeOut();
+// Toggle TaskLists
+function toggleTaskLists() {
+    if(UserPreferences.TaskCategory.Work) {
+        $('#workList').fadeIn(); 
+        $('#topTaskSelectorWork').addClass('active');
+        $('#btnSelectWork').find('.i-type-selector').removeClass('fa-circle-0').addClass('.fa-check-circle');
+    } else {
+        $('#workList').fadeOut();
+        $('#topTaskSelectorWork').removeClass('active');
+        $('#btnSelectWork').find('.i-type-selector').addClass('fa-circle-0').removeClass('.fa-check-circle');        
+    }
+
+    if(UserPreferences.TaskCategory.Home) {
+        $('#homeList').fadeIn(); 
+        $('#topTaskSelectorHome').addClass('active');
+    }
+    else {
+        $('#homeList').fadeOut();
+        $('#topTaskSelectorHome').removeClass('active');
+    }
+
+    if(UserPreferences.TaskCategory.Personal) {
+        $('#personalList').fadeIn(); 
+        $('#topTaskSelectorPersonal').addClass('active');
+    }
+    else {
+        $('#personalList').fadeOut();
+        $('#topTaskSelectorPersonal').removeClass('active');
+    }
+
+    if(UserPreferences.TaskCategory.Other) {
+        $('#otherList').fadeIn(); 
+        $('#topTaskSelectorOther').addClass('active');
+    }
+    else {
+        $('#otherList').fadeOut();
+        $('#topTaskSelectorOther').removeClass('active');
+    }
+
+    // Save preferences in localstorage
+    UserPreferences.SavePreferences();
+}
+
+// Toggle task types
+function toggleTaskTypes() {
+    toggleButton($('#pendingSelectTaskType'), UserPreferences.TaskType.Pending);
+    toggleButton($('#completedSelectTaskType'), UserPreferences.TaskType.Completed);
+}
+
+// Adds a class 'selected' to a button if secondary parameter passed is truthy
+function toggleButton(elem, flag) {
+    if(flag)
+        $(elem).addClass('selected');
+    else
+        $(elem).removeClass('selected');
 }
 
 //*****************************************************
@@ -108,7 +146,37 @@ function deleteTask() {
 
 }
 
+
+
+
 $(document).ready(function () {
+
+    // Get preferences from localstorage    
+    UserPreferences = {
+        // Can be pending, complete, all
+        TaskType: {
+            Pending: true,
+            Completed: false
+        },
+        TaskCategory: {
+            Work: true,
+            Personal: true,
+            Home: true,
+            Other: true,
+        },
+        // Get saved preferences from local storage
+        GetPreferences: function() {
+            if(this.TaskType) this.TaskType = JSON.parse(localStorage.getItem('TaskType'));
+            if(this.TaskCategory) this.TaskCategory = JSON.parse(localStorage.getItem('TaskCategory'));
+        },
+        // Set user preferences in local storage
+        SavePreferences: function() {
+            localStorage.setItem('TaskType', JSON.stringify(this.TaskType));
+            localStorage.setItem('TaskCategory', JSON.stringify(this.TaskCategory));
+        }
+    };
+
+    UserPreferences.GetPreferences();
 
     // Hide all divs that are not required at initialization
     $('.comments-popup').hide();
@@ -117,22 +185,36 @@ $(document).ready(function () {
     $('#login-text').hide();
     $('#content-loader').hide();
 
-    // Hide all tasks lists
-    hideTasksLists();
+    // Handle user preferences
+    $('.select-task-type').click(function() {
+        var type = $(this).attr('title');
+
+        switch(type) {
+            case 'pending':
+                UserPreferences.TaskType.Pending = !UserPreferences.TaskType.Pending;
+                toggleButton($(this), UserPreferences.TaskType.Pending);
+                break;
+
+            case 'complete':
+                UserPreferences.TaskType.Completed = !UserPreferences.TaskType.Completed;
+                toggleButton($(this), UserPreferences.TaskType.Completed);
+                break;
+        }
+
+        UserPreferences.SavePreferences();
+    });
+
+    // Toggle all tasks lists
+    toggleTaskLists();
+    toggleTaskTypes();
     
     resetLoginForm();
     resetRegisterForm();
 
-    // Get user preferences from localstorage or Initialize
-    userPreferences.taskType = 
-        localStorage.getItem('TaskType') ? localStorage.getItem('TaskType') : 'pending';
-    userPreferences.taskCategory = 
-        localStorage.getItem('TaskType') ? localStorage.getItem('TaskType').split(' ') : ['work'];
-
-    $('.type-selector').click(function() {
-        $(this).find('i.fa-circle-o').removeClass('fa-circle-o').addClass('fa-check-circle');
-        $(this).find('i.fa-circle-o').removeClass('fa-check-circle').addClass('fa-circle-o');
-    });
+    // $('.type-selector').click(function() {
+    //     $(this).find('i.fa-circle-o').removeClass('fa-circle-o').addClass('fa-check-circle');
+    //     $(this).find('i.fa-circle-o').removeClass('fa-check-circle').addClass('fa-circle-o');
+    // });
 
     // Stop the form from getting submitted
     $('#loginForm').submit(function (e) {
@@ -248,7 +330,7 @@ $(document).ready(function () {
             });
     });
 
-    // Show/Hide Signin & Singup forms
+    // Show/Hide Signin & Signup forms
     $('#btnRegisterText').click(function () {
         $('#login-text').show();
         $('#register-text').hide();
@@ -304,43 +386,23 @@ $(document).ready(function () {
 
     // Handle task selector - Top section
     $('#topTaskSelectorWork').click(function() {
-        SelectedTaskTypes.Work = !SelectedTaskTypes.Work;
-        if(SelectedTaskTypes.Work) {
-            $('#topTaskSelectorWork').addClass('active');
-        } else {
-            $('#topTaskSelectorWork').removeClass('active');
-        }
-        hideTasksLists();
+        UserPreferences.TaskCategory.Work = !UserPreferences.TaskCategory.Work;
+        toggleTaskLists();
     });
 
     $('#topTaskSelectorPersonal').click(function() {
-        SelectedTaskTypes.Personal = !SelectedTaskTypes.Personal;
-        if(SelectedTaskTypes.Personal) {
-            $('#topTaskSelectorPersonal').addClass('active');
-        } else {
-            $('#topTaskSelectorPersonal').removeClass('active');
-        }
-        hideTasksLists();
+        UserPreferences.TaskCategory.Personal = !UserPreferences.TaskCategory.Personal;
+        toggleTaskLists();
     });
     
     $('#topTaskSelectorHome').click(function() {
-        SelectedTaskTypes.Home = !SelectedTaskTypes.Home;
-        if(SelectedTaskTypes.Home) {
-            $('#topTaskSelectorHome').addClass('active');
-        } else {
-            $('#topTaskSelectorHome').removeClass('active');
-        }
-        hideTasksLists();
+        UserPreferences.TaskCategory.Home = !UserPreferences.TaskCategory.Home;
+        toggleTaskLists();
     });
 
     $('#topTaskSelectorOther').click(function() {
-        SelectedTaskTypes.Other = !SelectedTaskTypes.Other;
-        if(SelectedTaskTypes.Other) {
-            $('#topTaskSelectorOther').addClass('active');
-        } else {
-            $('#topTaskSelectorOther').removeClass('active');
-        }
-        hideTasksLists();
+        UserPreferences.TaskCategory.Other = !UserPreferences.TaskCategory.Other;
+        toggleTaskLists();
     });
 
 // End of document.ready
