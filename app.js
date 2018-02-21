@@ -44,38 +44,44 @@ function toggleTaskLists() {
     if(UserPreferences.TaskCategory.Work) {
         $('#workList').fadeIn(); 
         $('#topTaskSelectorWork').addClass('active');
-        $('#btnSelectWork').find('.i-type-selector').removeClass('fa-circle-0').addClass('.fa-check-circle');
+        $('#btnSelectWork').find('.i-type-selector').removeClass('fa-circle-o').addClass('fa-check-circle');
     } else {
         $('#workList').fadeOut();
         $('#topTaskSelectorWork').removeClass('active');
-        $('#btnSelectWork').find('.i-type-selector').addClass('fa-circle-0').removeClass('.fa-check-circle');        
+        $('#btnSelectWork').find('.i-type-selector').addClass('fa-circle-o').removeClass('fa-check-circle');        
     }
 
     if(UserPreferences.TaskCategory.Home) {
         $('#homeList').fadeIn(); 
         $('#topTaskSelectorHome').addClass('active');
+        $('#btnSelectHome').find('.i-type-selector').removeClass('fa-circle-o').addClass('fa-check-circle');        
     }
     else {
         $('#homeList').fadeOut();
         $('#topTaskSelectorHome').removeClass('active');
+        $('#btnSelectHome').find('.i-type-selector').addClass('fa-circle-o').removeClass('fa-check-circle');                
     }
 
     if(UserPreferences.TaskCategory.Personal) {
         $('#personalList').fadeIn(); 
         $('#topTaskSelectorPersonal').addClass('active');
+        $('#btnSelectPersonal').find('.i-type-selector').removeClass('fa-circle-o').addClass('fa-check-circle');                
     }
     else {
         $('#personalList').fadeOut();
         $('#topTaskSelectorPersonal').removeClass('active');
+        $('#btnSelectPersonal').find('.i-type-selector').addClass('fa-circle-o').removeClass('fa-check-circle');                        
     }
 
     if(UserPreferences.TaskCategory.Other) {
         $('#otherList').fadeIn(); 
         $('#topTaskSelectorOther').addClass('active');
+        $('#btnSelectOther').find('.i-type-selector').removeClass('fa-circle-o').addClass('fa-check-circle');
     }
     else {
         $('#otherList').fadeOut();
         $('#topTaskSelectorOther').removeClass('active');
+        $('#btnSelectOther').find('.i-type-selector').addClass('fa-circle-o').removeClass('fa-check-circle');  
     }
 
     // Save preferences in localstorage
@@ -86,6 +92,29 @@ function toggleTaskLists() {
 function toggleTaskTypes() {
     toggleButton($('#pendingSelectTaskType'), UserPreferences.TaskType.Pending);
     toggleButton($('#completedSelectTaskType'), UserPreferences.TaskType.Completed);
+}
+
+// Toggle date range for tasks
+
+
+// Reset all filters
+function resetAllFilters() {
+    UserPreferences.TaskCategory = {
+        Work: true,
+        Personal: false,
+        Home: false,
+        Other: false,
+    };
+    toggleTaskLists();
+
+    UserPreferences.TaskType = {
+        Pending: true,
+        Completed: false
+    };
+    toggleTaskTypes();
+
+    UserPreferences.TaskDate.Range = 'all';
+    toggleTaskRange();
 }
 
 // Adds a class 'selected' to a button if secondary parameter passed is truthy
@@ -160,9 +189,12 @@ $(document).ready(function () {
         },
         TaskCategory: {
             Work: true,
-            Personal: true,
-            Home: true,
-            Other: true,
+            Personal: false,
+            Home: false,
+            Other: false,
+        },
+        TaskDate : {
+            Range: 'all' // Can be 'week', 'month', 'all', 'custom'
         },
         // Get saved preferences from local storage
         GetPreferences: function() {
@@ -184,6 +216,7 @@ $(document).ready(function () {
     $('.container').hide();
     $('#login-text').hide();
     $('#content-loader').hide();
+    $('#filter-date').hide();
 
     // Handle user preferences
     $('.select-task-type').click(function() {
@@ -211,10 +244,30 @@ $(document).ready(function () {
     resetLoginForm();
     resetRegisterForm();
 
-    // $('.type-selector').click(function() {
-    //     $(this).find('i.fa-circle-o').removeClass('fa-circle-o').addClass('fa-check-circle');
-    //     $(this).find('i.fa-circle-o').removeClass('fa-check-circle').addClass('fa-circle-o');
-    // });
+    // Reset all filters
+    $('#btnResetFilters').click(function() {
+        resetAllFilters();
+    });
+
+    // Handle task type selector in nav menu
+    $('.type-selector').click(function() {
+        var btnType =  $(this).attr('id');
+        switch(btnType) {
+            case 'btnSelectWork':
+                UserPreferences.TaskCategory.Work = !UserPreferences.TaskCategory.Work;
+                break;
+            case 'btnSelectPersonal':
+                UserPreferences.TaskCategory.Personal = !UserPreferences.TaskCategory.Personal;
+                break;
+            case 'btnSelectHome':
+                UserPreferences.TaskCategory.Home = !UserPreferences.TaskCategory.Home;
+                break;
+            case 'btnSelectOther':
+                UserPreferences.TaskCategory.Other = !UserPreferences.TaskCategory.Other;
+                break;
+        }
+        toggleTaskLists();
+    });
 
     // Stop the form from getting submitted
     $('#loginForm').submit(function (e) {
