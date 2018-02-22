@@ -92,10 +92,38 @@ function toggleTaskLists() {
 function toggleTaskTypes() {
     toggleButton($('#pendingSelectTaskType'), UserPreferences.TaskType.Pending);
     toggleButton($('#completedSelectTaskType'), UserPreferences.TaskType.Completed);
+
+    // Save preferences in localstorage
+    UserPreferences.SavePreferences();
 }
 
 // Toggle date range for tasks
+function toggleTaskRange() {
+    resetAllTaskRange();
+    switch(UserPreferences.TaskDate.Range) {
+        case 'all':
+            toggleButton($('#btnFilterAll'), true);
+            break;
+        case 'week':
+            toggleButton($('#btnFilterWeek'), true);
+            break;
+        case 'month':
+            toggleButton($('#btnFilterMonth'), true);
+            break;
+        case 'custom':
+            toggleButton($('#btnFilterCustom'), true);
+            $('.filter-date').fadeIn();
+            break;
+    }
+}
 
+function resetAllTaskRange() {
+    toggleButton($('#btnFilterWeek'), false);
+    toggleButton($('#btnFilterMonth'), false);
+    toggleButton($('#btnFilterCustom'), false);
+    toggleButton($('#btnFilterAll'), false);
+    $('.filter-date').fadeOut();
+}
 
 // Reset all filters
 function resetAllFilters() {
@@ -210,13 +238,15 @@ $(document).ready(function () {
 
     UserPreferences.GetPreferences();
 
+    toggleTaskRange();
+
     // Hide all divs that are not required at initialization
     $('.comments-popup').hide();
     $('.login-container').hide();
     $('.container').hide();
     $('#login-text').hide();
     $('#content-loader').hide();
-    $('#filter-date').hide();
+    $('.filter-date').hide();
 
     // Handle user preferences
     $('.select-task-type').click(function() {
@@ -235,6 +265,30 @@ $(document).ready(function () {
         }
 
         UserPreferences.SavePreferences();
+    });
+
+    $('.select-task-range').click(function() {
+        var range = $(this).attr('id');
+
+        switch(range) {
+            case 'btnFilterWeek':
+                UserPreferences.TaskDate.Range = 'week';
+                break;
+
+            case 'btnFilterMonth':
+                UserPreferences.TaskDate.Range = 'month';
+                break;
+
+            case 'btnFilterCustom':
+                UserPreferences.TaskDate.Range = 'custom';
+                break;
+
+            case 'btnFilterAll':
+                UserPreferences.TaskDate.Range = 'all';
+                break;
+        }
+
+        toggleTaskRange();
     });
 
     // Toggle all tasks lists
