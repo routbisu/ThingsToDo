@@ -159,7 +159,7 @@ function toggleButton(elem, flag) {
 
 // Adds a new task in firebase DB and returns a promise
 function addNewTask(categoryName, taskDescription) {
-    var tasksRef = database.ref('tasks');
+    var tasksRef = database.ref(loggedInUserID + '/tasks');
 
     var newTask = {
         category: categoryName,
@@ -176,7 +176,7 @@ function addNewTask(categoryName, taskDescription) {
 // Add a comment for a task, returns callbacks to handle success and error
 function addNewComment(taskID, commentText, success, error) {
     try {
-        var commentRef = database.ref('tasks/' + taskID + '/comments');
+        var commentRef = database.ref(loggedInUserID + '/tasks/' + taskID + '/comments');
         
         var newComment = {
             desc: commentText,
@@ -195,14 +195,29 @@ function addNewComment(taskID, commentText, success, error) {
 } 
 
 // Mark task as complete
-function markTaskComplete() {
-
+// Mark task complete with current timestamp and return a promise
+function markTaskComplete(taskID) {
+    var taskRef = database.ref(loggedInUserID + '/tasks/' + taskID);
+    
+    // Current timestamp
+    var currentTime = firebase.database.ServerValue.TIMESTAMP;
+    return taskRef.update({completed_date: currentTime});
 }
 
-function deleteTask() {
-
+// Delete a task completely
+function deleteTask(taskID) {
+    var taskRef = database.ref(loggedInUserID + '/tasks/' + taskID);
+    return taskRef.remove();
 }
 
+// Fetch tasks
+// Input - instance of UserPreferences
+// Output set the output in a global variable
+// Returns a promise
+function fetchTasks(UserPreferences) {
+    // Get all tasks for the user
+    
+}
 
 
 
