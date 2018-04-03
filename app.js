@@ -324,10 +324,9 @@ function showItemsInPopup() {
     for(var itemName in USER_DATA) {
         var itemDetails = USER_DATA[itemName];
         var taskHTML = '<li><span class="date">' + formatDate(itemDetails['add_date'])
-            + '</span><i class="fa ' + 
+            + '</span><i class="task-toggle fa ' + 
             (itemDetails['completed_date'] == 0 ? 'fa-circle-o' : 'fa-check-circle') 
-            + '" onclick="toggleTaskStatus(\'' + itemName
-            + '\')"></i> '
+            + '" firebaseid="' + itemName + '"></i> '
             + (itemDetails['completed_date'] == 0 ? '' : '<span class="completed">') 
             + itemDetails['desc'] 
             + (itemDetails['completed_date'] == 0 ? '' : '</span>') 
@@ -683,6 +682,12 @@ $(document).ready(function () {
             fetchTasks();
             $($txt).val('');
         }
+    });
+
+    // Handle toggle task status
+    $(document).on('click', '.task-toggle', function() {
+        var taskId = $(this).attr('firebaseid');
+        toggleTaskStatus(taskId);
     });
 
 // End of document.ready
