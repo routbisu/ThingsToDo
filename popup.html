@@ -195,90 +195,32 @@
             <div class="things-list-heading"><i class="fa fa-briefcase"></i> Work</div>
             <input type="text" class="add-task" placeholder="Add new task" id="txtAddTaskWork" />
             <i class="fa fa-plus add-button"></i>
-            <ul>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Go fishing on Varthur lake</li>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-check-circle"></i>
-                    <span class="completed">
-                        CR059 Add Terms &amp; Conditions
-                    </span>
-                    <i class="fa fa-comments"></i>
-                </li>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Withdraw cash
-                    <i class="fa fa-comments"></i>
-                </li>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Fill up appraisail form
-                    <i class="fa fa-comments"></i>
-                </li>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Write Notes
-                    <i class="fa fa-comments"></i>
-                </li>
-            </ul>
+            <div id="workListItems">
+                
+            </div>
         </div>
 
         <div class="things-list" id="personalList">
             <div class="things-list-heading"><i class="fa fa-user"></i> Personal</div>
             <input type="text" class="add-task" placeholder="Add new task" id="txtAddTaskPersonal" />
             <i class="fa fa-plus add-button"></i>
-            <ul>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Go fishing on Varthur lake</li>
-                
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Withdraw cash
-                    <i class="fa fa-comments"></i>
-                </li>
-            </ul>
+            <div id="personalListItems"></div>
         </div>
 
         <div class="things-list" id="homeList">
             <div class="things-list-heading"><i class="fa fa-home"></i> Home</div>
             <input type="text" class="add-task" placeholder="Add new task" id="txtAddTaskHome" />
             <i class="fa fa-plus add-button"></i>
-            <ul>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Go fishing on Varthur lake</li>
-                
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Withdraw cash
-                    <i class="fa fa-comments"></i>
-                </li>
-            </ul>
+            <div id="homeListItems"></div>
         </div>
 
         <div class="things-list" id="otherList">
             <div class="things-list-heading"><i class="fa fa-tasks"></i> Other</div>
             <input type="text" class="add-task" placeholder="Add new task" id="txtAddTaskOther" />
             <i class="fa fa-plus add-button"></i>
-            <ul>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Go fishing on Varthur lake</li>
-                    <li>
-                        <span class="date">12-Oct-17</span>
-                        <i class="fa fa-circle-o"></i> Go fishing on Varthur lake</li>
-                        <li>
-                            <span class="date">12-Oct-17</span>
-                            <i class="fa fa-circle-o"></i> Go fishing on Varthur lake</li>
-                <li>
-                    <span class="date">12-Oct-17</span>
-                    <i class="fa fa-circle-o"></i> Withdraw cash
-                    <i class="fa fa-comments"></i>
-                </li>
-            </ul>
+            <div id="otherListItems">
+
+            </div>
         </div>
 
     </div>
@@ -288,6 +230,7 @@
     <script src="dscripts/firebase-app.js"></script>
     <script src="dscripts/firebase-auth.js"></script>
     <script src="dscripts/firebase-database.js"></script>
+    <script src="dscripts/moment.min.js"></script>
 
     <script src="app.js"></script>
 </body>

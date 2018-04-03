@@ -4,6 +4,9 @@ var isMenuOpen = false;
 var loggedInUser = null;
 var loggedInUserID = null;
 
+// Html strings
+var htmlNoItemsFound = '<span class="no-items-found"> <i class="fa fa-thumb-tack"></i> No items found.</span>';
+
 var UserPreferences = {};
 
 // Firebase initialization
@@ -86,6 +89,7 @@ function toggleTaskLists() {
 
     // Save preferences in localstorage
     UserPreferences.SavePreferences();
+    fetchTasks();
 }
 
 // Toggle task types
@@ -95,6 +99,7 @@ function toggleTaskTypes() {
 
     // Save preferences in localstorage
     UserPreferences.SavePreferences();
+    fetchTasks();
 }
 
 // Toggle date range for tasks
@@ -115,6 +120,7 @@ function toggleTaskRange() {
             $('.filter-date').fadeIn();
             break;
     }
+    fetchTasks();
 }
 
 function resetAllTaskRange() {
@@ -210,15 +216,105 @@ function deleteTask(taskID) {
     return taskRef.remove();
 }
 
+// Items to be displayed in popup
+var USER_DATA = {};
+
+var FilterData = {
+    TaskDate: function(callback) {
+        var currentTS = firebase.database.ServerValue.TIMESTAMP;
+        var startTS = 0;
+
+        switch(UserPreferences.TaskDate.Range) {
+            case 'week':
+                startTS = currentTS - 1000 * 3600 * 24 * 7;
+                break;
+    
+            case 'month':
+                startTS = currentTS - 1000 * 3600 * 24 * 30;
+                break;
+    
+            case 'custom':
+                startTS = currentTS - 1000 * 3600 * 24 * 7;
+                break;        
+        }
+
+        var USER_DATA_BKP = USER_DATA;
+        USER_DATA = {};
+
+        for(var itemName in USER_DATA_BKP) {
+            var itemDetails = USER_DATA_BKP[itemName];
+            if (itemDetails['add_date'] >= startTS) {
+                USER_DATA[itemName] = itemDetails;
+            }
+        }
+
+        callback();
+    },
+    TaskType: function(callback) {
+
+        // If user wants to view all items
+        if (UserPreferences.TaskType.Pending && UserPreferences.TaskType.Completed) {
+            database.ref(loggedInUserID + '/tasks').orderByKey().on('value', function(snapshot) {
+                USER_DATA = snapshot.val();
+                callback();
+            });
+        } else {
+            // Get all pending items
+            if (UserPreferences.TaskType.Pending) {
+                database.ref(loggedInUserID + '/tasks').orderByChild('completed_date').equalTo(0)
+                    .on('value', function(snapshot) {
+                    USER_DATA = snapshot.val();
+                    callback();
+                });
+            // Get all completed items
+            } else {
+                database.ref(loggedInUserID + '/tasks').orderByChild('completed_date').startAt(1).endAt(9999999999999)
+                    .on('value', function(snapshot) {
+                        USER_DATA = snapshot.val();
+                        callback();
+                });
+            }
+        }
+    }
+};
+
 // Fetch tasks
 // Input - instance of UserPreferences
 // Output set the output in a global variable
-// Returns a promise
-function fetchTasks(UserPreferences) {
-    // Get all tasks for the user
-    
+function fetchTasks() {
+    // Filter based on task type - Pending or Completed
+    FilterData.TaskType(function() {
+        FilterData.TaskDate(function() {
+            showItemsInPopup();
+        });
+    });   
 }
 
+// Show items in popup
+function showItemsInPopup() {
+    var HtmlBody = { home: '', work: '', personal: '', other: ''};
+
+    var taskHTMLHead = '<ul>';
+    for(var itemName in USER_DATA) {
+        var itemDetails = USER_DATA[itemName];
+        var taskHTML = '<li><span class="date">' + formatDate(itemDetails['add_date'])
+            + '</span><i class="fa fa-circle-o"></i> ' + itemDetails['desc'] + ' </li>';
+        HtmlBody[itemDetails['category']] += taskHTML;
+    }
+    var taskHTMLTail = '</ul>';
+
+    $('#workListItems, #personalListItems, #homeListItems, #otherListItems').html(htmlNoItemsFound);
+
+    if(HtmlBody.work != '') $('#workListItems').html(taskHTMLHead + HtmlBody.work + taskHTMLTail);
+    if(HtmlBody.personal != '') $('#personalListItems').html(taskHTMLHead + HtmlBody.personal + taskHTMLTail);
+    if(HtmlBody.home != '') $('#homeListItems').html(taskHTMLHead + HtmlBody.home + taskHTMLTail);
+    if(HtmlBody.other != '') $('#otherListItems').html(taskHTMLHead + HtmlBody.other + taskHTMLTail);
+}
+
+// Format firebase UNIX timestamp to DD-MMM-YYYY
+function formatDate(firebaseUnixTS) {
+    return moment.unix(firebaseUnixTS / 1000).format("DD-MMM-YYYY");
+}
 
 
 $(document).ready(function () {
@@ -280,6 +376,7 @@ $(document).ready(function () {
         }
 
         UserPreferences.SavePreferences();
+        fetchTasks();
     });
 
     $('.select-task-range').click(function() {
@@ -316,6 +413,7 @@ $(document).ready(function () {
     // Reset all filters
     $('#btnResetFilters').click(function() {
         resetAllFilters();
+        fetchTasks();
     });
 
     // Handle task type selector in nav menu
@@ -351,9 +449,7 @@ $(document).ready(function () {
     });
 
     // If no user is logged in then show the login division
-    console.log(firebase.auth().currentUser);
     auth.onAuthStateChanged(function (user) {
-        console.log(user);
         if (user) {
             // User is logged in.
             loggedInUser = user;
@@ -378,6 +474,7 @@ $(document).ready(function () {
             $('.container').hide();
             $('header').hide();
         }
+        fetchTasks();
     });
 
     // Event handler for Sign Up button
@@ -416,7 +513,6 @@ $(document).ready(function () {
                         $('#loginLoader').hide();
                         $('#incorectLoginMsg').show();
                         $('#incorrect-login-msg').text(err.message);
-                        console.log(err);
                     });
             })
             .catch(function (error) {
