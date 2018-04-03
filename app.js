@@ -210,6 +210,32 @@ function markTaskComplete(taskID) {
     return taskRef.update({completed_date: currentTime});
 }
 
+// Mark task as incpmplete
+// Mark task incpmplete with current timestamp and return a promise
+function markTaskIncomplete(taskID) {
+    var taskRef = database.ref(loggedInUserID + '/tasks/' + taskID);
+    
+    // Current timestamp
+    return taskRef.update({completed_date: 0});
+}
+
+// Toggle task status to pending or complete
+function toggleTaskStatus(taskID) {
+    var taskRef = database.ref(loggedInUserID + '/tasks/' + taskID);
+    taskRef.once('value', function(s) {
+        var taskDetails = s.val();
+        if(taskDetails.completed_date > 0) {
+            markTaskIncomplete(taskID).then(function() {
+                fetchTasks();
+            });
+        } else {
+            markTaskComplete(taskID).then(function() {
+                fetchTasks();
+            });
+        }
+    });
+}
+
 // Delete a task completely
 function deleteTask(taskID) {
     var taskRef = database.ref(loggedInUserID + '/tasks/' + taskID);
@@ -298,7 +324,14 @@ function showItemsInPopup() {
     for(var itemName in USER_DATA) {
         var itemDetails = USER_DATA[itemName];
         var taskHTML = '<li><span class="date">' + formatDate(itemDetails['add_date'])
-            + '</span><i class="fa fa-circle-o"></i> ' + itemDetails['desc'] + ' </li>';
+            + '</span><i class="fa ' + 
+            (itemDetails['completed_date'] == 0 ? 'fa-circle-o' : 'fa-check-circle') 
+            + '" onclick="toggleTaskStatus(\'' + itemName
+            + '\')"></i> '
+            + (itemDetails['completed_date'] == 0 ? '' : '<span class="completed">') 
+            + itemDetails['desc'] 
+            + (itemDetails['completed_date'] == 0 ? '' : '</span>') 
+            + ' </li>';
         HtmlBody[itemDetails['category']] += taskHTML;
     }
     var taskHTMLTail = '</ul>';
@@ -315,7 +348,6 @@ function showItemsInPopup() {
 function formatDate(firebaseUnixTS) {
     return moment.unix(firebaseUnixTS / 1000).format("DD-MMM-YYYY");
 }
-
 
 $(document).ready(function () {
 
@@ -621,6 +653,36 @@ $(document).ready(function () {
     $('#topTaskSelectorOther').click(function() {
         UserPreferences.TaskCategory.Other = !UserPreferences.TaskCategory.Other;
         toggleTaskLists();
+    });
+
+    // Add a new task
+    // On pressing enter in the textbox
+    $('.add-task').on('keypress', function(e) {
+        var taskText = $(this).val();
+        var taskCategory = $(this).attr('title');
+
+        if ($.trim(taskText) != '') {
+            var code = e.keyCode || e.which;
+            if(code == 13) {
+                // Enter is pressed
+                addNewTask(taskCategory, taskText);
+                fetchTasks();
+                $(this).val('');
+            }
+        }
+    });
+
+    // Add task on pressing add button
+    $('.add-button').click(function() {
+        var $txt = $(this).parent().find('.add-task');
+        var taskText = $txt.val();
+        var taskCategory = $txt.attr('title');
+
+        if ($.trim(taskText) != '') {
+            addNewTask(taskCategory, taskText);
+            fetchTasks();
+            $($txt).val('');
+        }
     });
 
 // End of document.ready
