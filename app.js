@@ -7,32 +7,7 @@ var loggedInUserID = null;
 // Html strings
 var htmlNoItemsFound = '<span class="no-items-found"> <i class="fa fa-thumb-tack"></i> No items found.</span>';
 
-var UserPreferences = {
-    // Can be pending, complete, all
-    TaskType: {
-        Pending: true,
-        Completed: false
-    },
-    TaskCategory: {
-        Work: true,
-        Personal: false,
-        Home: false,
-        Other: false,
-    },
-    TaskDate : {
-        Range: 'all' // Can be 'week', 'month', 'all', 'custom'
-    },
-    // Get saved preferences from local storage
-    GetPreferences: function() {
-        if(this.TaskType) this.TaskType = JSON.parse(localStorage.getItem('TaskType'));
-        if(this.TaskCategory) this.TaskCategory = JSON.parse(localStorage.getItem('TaskCategory'));
-    },
-    // Set user preferences in local storage
-    SavePreferences: function() {
-        localStorage.setItem('TaskType', JSON.stringify(this.TaskType));
-        localStorage.setItem('TaskCategory', JSON.stringify(this.TaskCategory));
-    }
-};
+var UserPreferences = {};
 
 // Firebase initialization
 var config = {
@@ -69,7 +44,7 @@ var resetRegisterForm = function () {
 
 // Toggle TaskLists
 function toggleTaskLists() {
-    if(UserPreferences.TaskCategory.Work) {
+    if(UserPreferences.TaskCategory && UserPreferences.TaskCategory.Work) {
         $('#workList').fadeIn(); 
         $('#topTaskSelectorWork').addClass('active');
         $('#btnSelectWork').find('.i-type-selector').removeClass('fa-circle-o').addClass('fa-check-circle');
@@ -79,7 +54,7 @@ function toggleTaskLists() {
         $('#btnSelectWork').find('.i-type-selector').addClass('fa-circle-o').removeClass('fa-check-circle');        
     }
 
-    if(UserPreferences.TaskCategory.Home) {
+    if(UserPreferences.TaskCategory && UserPreferences.TaskCategory.Home) {
         $('#homeList').fadeIn(); 
         $('#topTaskSelectorHome').addClass('active');
         $('#btnSelectHome').find('.i-type-selector').removeClass('fa-circle-o').addClass('fa-check-circle');        
@@ -90,7 +65,7 @@ function toggleTaskLists() {
         $('#btnSelectHome').find('.i-type-selector').addClass('fa-circle-o').removeClass('fa-check-circle');                
     }
 
-    if(UserPreferences.TaskCategory.Personal) {
+    if(UserPreferences.TaskCategory && UserPreferences.TaskCategory.Personal) {
         $('#personalList').fadeIn(); 
         $('#topTaskSelectorPersonal').addClass('active');
         $('#btnSelectPersonal').find('.i-type-selector').removeClass('fa-circle-o').addClass('fa-check-circle');                
@@ -101,7 +76,7 @@ function toggleTaskLists() {
         $('#btnSelectPersonal').find('.i-type-selector').addClass('fa-circle-o').removeClass('fa-check-circle');                        
     }
 
-    if(UserPreferences.TaskCategory.Other) {
+    if(UserPreferences.TaskCategory && UserPreferences.TaskCategory.Other) {
         $('#otherList').fadeIn(); 
         $('#topTaskSelectorOther').addClass('active');
         $('#btnSelectOther').find('.i-type-selector').removeClass('fa-circle-o').addClass('fa-check-circle');
@@ -119,12 +94,14 @@ function toggleTaskLists() {
 
 // Toggle task types
 function toggleTaskTypes() {
-    toggleButton($('#pendingSelectTaskType'), UserPreferences.TaskType.Pending);
-    toggleButton($('#completedSelectTaskType'), UserPreferences.TaskType.Completed);
-
-    // Save preferences in localstorage
-    UserPreferences.SavePreferences();
-    fetchTasks();
+    if(UserPreferences.TaskType) {
+        toggleButton($('#pendingSelectTaskType'), UserPreferences.TaskType.Pending);
+        toggleButton($('#completedSelectTaskType'), UserPreferences.TaskType.Completed);
+    
+        // Save preferences in localstorage
+        UserPreferences.SavePreferences();
+        fetchTasks();
+    }
 }
 
 // Toggle date range for tasks
@@ -271,66 +248,82 @@ function deleteTask(taskID) {
 var USER_DATA = {};
 
 var FilterData = {
-    TaskDate: function(callback) {
-        var currentTS = moment().unix() * 1000;
-        var startTS = 0;
+  TaskDate: function(callback) {
+    var currentTS = moment().unix() * 1000;
+    var startTS = 0;
 
-        switch(UserPreferences.TaskDate.Range) {
-            case 'week':
-                startTS = currentTS - 1000 * 3600 * 24 * 7;
-                break;
-    
-            case 'month':
-                startTS = currentTS - 1000 * 3600 * 24 * 30;
-                break;
-    
-            case 'custom':
-                var fromDate = $('#fromDate').val();
-                var toDate = $('#toDate').val();
+    switch (UserPreferences.TaskDate.Range) {
+      case "week":
+        startTS = currentTS - 1000 * 3600 * 24 * 7;
+        break;
 
-                currentTS = getUnixTimestamp(toDate) || currentTS;
-                startTS = getUnixTimestamp(fromDate) || startTS;
-                break;        
-        }
+      case "month":
+        startTS = currentTS - 1000 * 3600 * 24 * 30;
+        break;
 
-        var USER_DATA_BKP = USER_DATA;
-        USER_DATA = {};
+      case "custom":
+        var fromDate = $("#fromDate").val();
+        var toDate = $("#toDate").val();
 
-        for(var itemName in USER_DATA_BKP) {
-            var itemDetails = USER_DATA_BKP[itemName];
-            if (itemDetails['add_date'] >= startTS && itemDetails['add_date'] <= currentTS) {
-                USER_DATA[itemName] = itemDetails;
-            }
-        }
-
-        callback();
-    },
-    TaskType: function(callback) {
-
-        // If user wants to view all items
-        if (UserPreferences.TaskType.Pending && UserPreferences.TaskType.Completed) {
-            database.ref(loggedInUserID + '/tasks').once('value', function(snapshot) {
-                USER_DATA = snapshot.val();
-                callback();
-            });
-        } else {
-            // Get all pending items
-            if (UserPreferences.TaskType.Pending) {
-                database.ref(loggedInUserID + '/tasks').orderByChild('completed_date').equalTo(0)
-                    .once('value', function(snapshot) {
-                    USER_DATA = snapshot.val();
-                    callback();
-                });
-            // Get all completed items
-            } else {
-                database.ref(loggedInUserID + '/tasks').orderByChild('completed_date').startAt(1).endAt(9999999999999)
-                    .once('value', function(snapshot) {
-                        USER_DATA = snapshot.val();
-                        callback();
-                });
-            }
-        }
+        currentTS = getUnixTimestamp(toDate) || currentTS;
+        startTS = getUnixTimestamp(fromDate) || startTS;
+        break;
     }
+
+    var USER_DATA_BKP = USER_DATA;
+    USER_DATA = {};
+
+    for (var itemName in USER_DATA_BKP) {
+      var itemDetails = USER_DATA_BKP[itemName];
+      if (
+        itemDetails["add_date"] >= startTS &&
+        itemDetails["add_date"] <= currentTS
+      ) {
+        USER_DATA[itemName] = itemDetails;
+      }
+    }
+
+    callback();
+  },
+  TaskType: function(callback) {
+    if (UserPreferences.TaskType) {
+      // If user wants to view all items
+      if (
+        UserPreferences.TaskType.Pending &&
+        UserPreferences.TaskType.Completed
+      ) {
+        database
+          .ref(loggedInUserID + "/tasks")
+          .once("value", function(snapshot) {
+            USER_DATA = snapshot.val();
+            callback();
+          });
+      } else {
+        // Get all pending items
+        if (UserPreferences.TaskType.Pending) {
+          database
+            .ref(loggedInUserID + "/tasks")
+            .orderByChild("completed_date")
+            .equalTo(0)
+            .once("value", function(snapshot) {
+              USER_DATA = snapshot.val();
+              callback();
+            });
+          // Get all completed items
+        } else {
+          database
+            .ref(loggedInUserID + "/tasks")
+            .orderByChild("completed_date")
+            .startAt(1)
+            .endAt(9999999999999)
+            .once("value", function(snapshot) {
+              USER_DATA = snapshot.val();
+              callback();
+            });
+        }
+      }
+    }
+  }
 };
 
 // Convert datetime string to unix timestamp
@@ -401,6 +394,7 @@ function capitalizeFirstLetter(string) {
 $(document).ready(function () {
 
     // Get preferences from localstorage    
+    
     UserPreferences = {
         // Can be pending, complete, all
         TaskType: {
@@ -428,7 +422,12 @@ $(document).ready(function () {
         }
     };
 
-    UserPreferences.GetPreferences();
+    if (localStorage.getItem('TaskType') == 'null' || !localStorage.getItem('TaskType')
+        || localStorage.getItem('TaskCategory') == 'null' || !localStorage.getItem('TaskCategory')) {
+            UserPreferences.SavePreferences();
+    } else {
+        UserPreferences.GetPreferences();
+    }
 
     toggleTaskRange();
 
