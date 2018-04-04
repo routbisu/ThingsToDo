@@ -284,7 +284,7 @@ var FilterData = {
 
         // If user wants to view all items
         if (UserPreferences.TaskType.Pending && UserPreferences.TaskType.Completed) {
-            database.ref(loggedInUserID + '/tasks').orderByKey().on('value', function(snapshot) {
+            database.ref(loggedInUserID + '/tasks').once('value', function(snapshot) {
                 USER_DATA = snapshot.val();
                 callback();
             });
@@ -292,14 +292,14 @@ var FilterData = {
             // Get all pending items
             if (UserPreferences.TaskType.Pending) {
                 database.ref(loggedInUserID + '/tasks').orderByChild('completed_date').equalTo(0)
-                    .on('value', function(snapshot) {
+                    .once('value', function(snapshot) {
                     USER_DATA = snapshot.val();
                     callback();
                 });
             // Get all completed items
             } else {
                 database.ref(loggedInUserID + '/tasks').orderByChild('completed_date').startAt(1).endAt(9999999999999)
-                    .on('value', function(snapshot) {
+                    .once('value', function(snapshot) {
                         USER_DATA = snapshot.val();
                         callback();
                 });
@@ -708,8 +708,10 @@ $(document).ready(function () {
             var code = e.keyCode || e.which;
             if(code == 13) {
                 // Enter is pressed
-                addNewTask(taskCategory, taskText);
-                fetchTasks();
+                addNewTask(taskCategory, taskText).then(function() {
+                    fetchTasks();
+                });
+                
                 $(this).val('');
             }
         }
@@ -722,8 +724,9 @@ $(document).ready(function () {
         var taskCategory = $txt.attr('title');
 
         if ($.trim(taskText) != '') {
-            addNewTask(taskCategory, taskText);
-            fetchTasks();
+            addNewTask(taskCategory, taskText).then(function() {
+                fetchTasks();
+            });
             $($txt).val('');
         }
     });
