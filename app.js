@@ -247,7 +247,7 @@ var USER_DATA = {};
 
 var FilterData = {
     TaskDate: function(callback) {
-        var currentTS = firebase.database.ServerValue.TIMESTAMP;
+        var currentTS = moment().unix() * 1000;
         var startTS = 0;
 
         switch(UserPreferences.TaskDate.Range) {
@@ -260,7 +260,11 @@ var FilterData = {
                 break;
     
             case 'custom':
-                startTS = currentTS - 1000 * 3600 * 24 * 7;
+                var fromDate = $('#fromDate').val();
+                var toDate = $('#toDate').val();
+
+                currentTS = getUnixTimestamp(toDate) || currentTS;
+                startTS = getUnixTimestamp(fromDate) || startTS;
                 break;        
         }
 
@@ -269,7 +273,7 @@ var FilterData = {
 
         for(var itemName in USER_DATA_BKP) {
             var itemDetails = USER_DATA_BKP[itemName];
-            if (itemDetails['add_date'] >= startTS) {
+            if (itemDetails['add_date'] >= startTS && itemDetails['add_date'] <= currentTS) {
                 USER_DATA[itemName] = itemDetails;
             }
         }
@@ -303,6 +307,16 @@ var FilterData = {
         }
     }
 };
+
+// Convert datetime string to unix timestamp
+// Input date format: YYYY-MM-DD
+function getUnixTimestamp(timeStr) {
+    var ts = moment(moment(timeStr, "YYYY-MM-DD").unix()*1000);
+    if(ts._isValid) {
+        return ts._i;
+    }
+    return false;
+}
 
 // Fetch tasks
 // Input - instance of UserPreferences
@@ -398,11 +412,25 @@ $(document).ready(function () {
             case 'pending':
                 UserPreferences.TaskType.Pending = !UserPreferences.TaskType.Pending;
                 toggleButton($(this), UserPreferences.TaskType.Pending);
+
+                // If completed button in unchecked then check it
+                if(!UserPreferences.TaskType.Completed) {
+                    UserPreferences.TaskType.Completed = true;
+                    toggleButton($('#completedSelectTaskType'), UserPreferences.TaskType.Completed);
+                }
+
                 break;
 
             case 'complete':
                 UserPreferences.TaskType.Completed = !UserPreferences.TaskType.Completed;
                 toggleButton($(this), UserPreferences.TaskType.Completed);
+
+                // If pending button in unchecked then check it
+                if(!UserPreferences.TaskType.Pending) {
+                    UserPreferences.TaskType.Pending = true;
+                    toggleButton($('#pendingSelectTaskType'), UserPreferences.TaskType.Pending);
+                }
+
                 break;
         }
 
@@ -431,6 +459,11 @@ $(document).ready(function () {
                 break;
         }
 
+        toggleTaskRange();
+    });
+
+    $('.filter-date').blur(function() {
+        UserPreferences.TaskDate.Range = 'custom';
         toggleTaskRange();
     });
 
