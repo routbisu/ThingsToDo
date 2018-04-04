@@ -332,6 +332,7 @@ function fetchTasks() {
 
 // Show items in popup
 function showItemsInPopup() {
+    var itemCounter = 0;
     var HtmlBody = { home: '', work: '', personal: '', other: ''};
 
     var taskHTMLHead = '<ul>';
@@ -346,6 +347,9 @@ function showItemsInPopup() {
             + (itemDetails['completed_date'] == 0 ? '' : '</span>') 
             + ' </li>';
         HtmlBody[itemDetails['category']] += taskHTML;
+
+        if(UserPreferences.TaskCategory[capitalizeFirstLetter(itemDetails['category'])])
+            itemCounter++;
     }
     var taskHTMLTail = '</ul>';
 
@@ -355,11 +359,18 @@ function showItemsInPopup() {
     if(HtmlBody.personal != '') $('#personalListItems').html(taskHTMLHead + HtmlBody.personal + taskHTMLTail);
     if(HtmlBody.home != '') $('#homeListItems').html(taskHTMLHead + HtmlBody.home + taskHTMLTail);
     if(HtmlBody.other != '') $('#otherListItems').html(taskHTMLHead + HtmlBody.other + taskHTMLTail);
+
+    $('#numTasksFound').text(itemCounter + ' task(s) found');
 }
 
 // Format firebase UNIX timestamp to DD-MMM-YYYY
 function formatDate(firebaseUnixTS) {
     return moment.unix(firebaseUnixTS / 1000).format("DD-MMM-YYYY");
+}
+
+// Capitalize first letter
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 $(document).ready(function () {
