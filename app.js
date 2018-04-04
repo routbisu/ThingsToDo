@@ -7,7 +7,32 @@ var loggedInUserID = null;
 // Html strings
 var htmlNoItemsFound = '<span class="no-items-found"> <i class="fa fa-thumb-tack"></i> No items found.</span>';
 
-var UserPreferences = {};
+var UserPreferences = {
+    // Can be pending, complete, all
+    TaskType: {
+        Pending: true,
+        Completed: false
+    },
+    TaskCategory: {
+        Work: true,
+        Personal: false,
+        Home: false,
+        Other: false,
+    },
+    TaskDate : {
+        Range: 'all' // Can be 'week', 'month', 'all', 'custom'
+    },
+    // Get saved preferences from local storage
+    GetPreferences: function() {
+        if(this.TaskType) this.TaskType = JSON.parse(localStorage.getItem('TaskType'));
+        if(this.TaskCategory) this.TaskCategory = JSON.parse(localStorage.getItem('TaskCategory'));
+    },
+    // Set user preferences in local storage
+    SavePreferences: function() {
+        localStorage.setItem('TaskType', JSON.stringify(this.TaskType));
+        localStorage.setItem('TaskCategory', JSON.stringify(this.TaskCategory));
+    }
+};
 
 // Firebase initialization
 var config = {
