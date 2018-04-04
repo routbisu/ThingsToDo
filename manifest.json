@@ -6,7 +6,7 @@
         "scripts": ["app.js, dscripts/jquery-3.2.1.min.js", "dscripts/firebase.js", "dscripts/background.js"],
         "persistent": true
     },
-    "version": "0.8.2",
+    "version": "0.8.3",
     "icons": {
         "48": "icon.png"
     },
