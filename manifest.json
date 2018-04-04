@@ -3,7 +3,7 @@
     "name": "Things To Do",
     "description": "This is a simple to-do extension for the Google Chrome browser.",
     "background": {
-        "scripts": ["app.js, dscripts/jquery-3.2.1.min.js", "dscripts/firebase.js", "dscripts/background.js"],
+        "scripts": ["dscripts/jquery-3.2.1.min.js", "dscripts/firebase.js", "dscripts/background.js"],
         "persistent": true
     },
     "version": "0.8.3",
